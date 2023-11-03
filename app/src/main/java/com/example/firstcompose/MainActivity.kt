@@ -16,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -31,21 +32,22 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BlogCategory(R.drawable.ic_far_heart,"Mohit", "GOEL")
+            Counter()
         }
     }
 }
 
+@Preview(showSystemUi = true)
 @Composable
-fun Recomposable() {
-    val state = remember { mutableStateOf(0.0) }
-    Log.d("TAGGED", "Looged during Initial Composition")
+fun Counter() {
+    var count = remember { mutableStateOf(0) }
+    var isDivisibleByThree = (count.value % 3 == 0)
+    LaunchedEffect(key1 = isDivisibleByThree) {
+        Log.d("Counter", "Current count : ${count.value} | keyValue  = $isDivisibleByThree")
+    }
     Button(onClick = {
-        state.value = Math.random()
+        count.value++
     }) {
-        Log.d("TAGGED", "Looged during both composition & recomposition")
-        Text(
-            text = state.value.toString()
-        )
+        Text(text = "Increment Count")
     }
 }

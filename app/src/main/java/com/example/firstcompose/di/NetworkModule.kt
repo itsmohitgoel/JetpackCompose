@@ -1,6 +1,5 @@
 package com.example.firstcompose.di
 
-import androidx.annotation.RestrictTo
 import com.example.firstcompose.remote.NetworkService
 import dagger.Module
 import dagger.Provides

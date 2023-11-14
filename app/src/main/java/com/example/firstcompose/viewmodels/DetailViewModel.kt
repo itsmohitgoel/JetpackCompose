@@ -12,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(val repository: TweetRepository) : ViewModel() {
 
-    val categories: StateFlow<List<TweetDto>>
+    val tweets: StateFlow<List<TweetDto>>
         get() = repository.tweets
 
     init {

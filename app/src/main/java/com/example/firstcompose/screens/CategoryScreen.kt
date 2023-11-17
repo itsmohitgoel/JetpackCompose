@@ -1,6 +1,7 @@
 package com.example.firstcompose.screens
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,34 +26,34 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.firstcompose.R
 import com.example.firstcompose.viewmodels.MainViewModel
 
 @Composable
-fun CategoryScreen() {
-    val viewModel: MainViewModel = viewModel()
+fun CategoryScreen(onClick: (category: String) -> Unit) {
+    val viewModel: MainViewModel = hiltViewModel()
     val categories: State<Set<String>> = viewModel.categories.collectAsState()
 
-    CategoryGrid(data = categories.value)
+    CategoryGrid(data = categories.value, onClick)
 
 }
 
 @Composable
-private fun CategoryGrid(data: Set<String>) {
+private fun CategoryGrid(data: Set<String>, onClick: (category: String) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.SpaceAround
     ) {
         items(data.toList()) { category ->
-            CategoryItem(category = category)
+            CategoryItem(category = category, onClick)
         }
     }
 }
 
 @Composable
-fun CategoryItem(category: String) {
+fun CategoryItem(category: String, onClick: (category: String) -> Unit) {
     Box(
         modifier = Modifier
             .padding(4.dp)
@@ -62,7 +63,10 @@ fun CategoryItem(category: String) {
             .paint(
                 painter = painterResource(id = R.drawable.ic_background_grid_item),
                 contentScale = ContentScale.Crop
-            ),
+            )
+            .clickable {
+                onClick(category)
+            },
         contentAlignment = Alignment.BottomCenter
     ) {
 

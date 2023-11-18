@@ -14,13 +14,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.firstcompose.models.TweetDto
 import com.example.firstcompose.viewmodels.DetailViewModel
 
 @Composable
 fun DetailScreen() {
-    val viewModel: DetailViewModel = viewModel()
+    val viewModel: DetailViewModel = hiltViewModel()
     val tweets = viewModel.tweets.collectAsState()
 
     TweetList(data = tweets.value)

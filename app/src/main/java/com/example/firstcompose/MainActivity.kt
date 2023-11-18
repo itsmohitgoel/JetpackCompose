@@ -3,7 +3,17 @@ package com.example.firstcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,6 +24,7 @@ import com.example.firstcompose.screens.DetailScreen
 import com.example.firstcompose.ui.theme.FirstComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -21,7 +32,23 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FirstComposeTheme {
-                MyNavGraph()
+                Scaffold(
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            title = {
+                                Text(text = "Tweetsy")
+                            },
+                            colors = TopAppBarDefaults.smallTopAppBarColors(
+                                titleContentColor = Color.Red,
+                                containerColor = Color.Black
+                            )
+                        )
+                    }
+                ) {
+                    Box(modifier = Modifier.padding(it)) {
+                        MyNavGraph()
+                    }
+                }
             }
         }
     }

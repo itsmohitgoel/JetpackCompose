@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -35,7 +36,16 @@ fun CategoryScreen(onClick: (category: String) -> Unit) {
     val viewModel: MainViewModel = hiltViewModel()
     val categories: State<Set<String>> = viewModel.categories.collectAsState()
 
-    CategoryGrid(data = categories.value, onClick)
+    if (categories.value.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(1f),
+            contentAlignment = Alignment.Center
+        ){
+            Text(text = "Loading...", style = MaterialTheme.typography.displayLarge)
+        }
+    } else {
+        CategoryGrid(data = categories.value, onClick)
+    }
 
 }
 
